@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# Command line interface to downloadVideo() in download.py
+
+cd "$(dirname "$0")"        # Sets the working directory to the directory this script is in
+source ./venv/bin/activate  # Activate the python venv
+
+# Get Flags
+while getopts p:r:e: flag
+do
+    case "${flag}" in
+        p) path=${OPTARG};;
+        r) res=${OPTARG};;
+        e) extension=${OPTARG};;
+    esac
+done
+
+# Set flag args to None by default if not set
+# Otherwise, format them as python strings
+if [ -z $path ]; then path=None; 
+else path=\'$path\'
+fi
+if [ -z $res ]; then res=None; 
+else res=\'$res\'
+fi
+if [ -z $extension ]; then extension=None; 
+else extension=\'$extension\'
+fi
+
+if [ $# -lt 1 ]; then
+    echo "Usage: $0 [-pre] <url>"
+else
+    url=$1
+    python -c "from download import *; downloadVideo('$url', path=$path, res=$res, extension=$extension)"
+fi 
