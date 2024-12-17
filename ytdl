@@ -3,7 +3,6 @@
 # Command line interface to downloadVideo() in download.py
 
 cd "$(dirname "$0")"        # Sets the working directory to the directory this script is in
-source ./venv/bin/activate  # Activate the python venv
 
 # Get Flags
 while getopts p:r:e: flag
@@ -31,6 +30,7 @@ if [ $# -lt 1 ]; then
     echo "Usage: $0 [-pre] <url>"
 else
     url=$1
+    source ./venv/bin/activate  # Activate the python venv
     python -c "from download import *; downloadVideo('$url', path=$path, res=$res, extension=$extension)"
     deactivate
 fi 

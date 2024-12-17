@@ -1,6 +1,6 @@
 # ytdl
 
-A simple youtube video downloader with GUI and CLI options.\
+A simple youtube video downloader with GUI and CLI options. Implemented using the `pytube` library (https://pypi.org/project/pytube/)\
 THIS PROJECT IS UNDER DEVELOPMENT. The code here is not stable and probably doesn't work.
 
 ## Setup

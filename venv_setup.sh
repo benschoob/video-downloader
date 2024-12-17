@@ -4,5 +4,8 @@
 
 python -m venv ./venv
 source ./venv/bin/activate
+
+# Install python packages
 pip install pytubefix
+
 deactivate
