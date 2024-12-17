@@ -32,4 +32,5 @@ if [ $# -lt 1 ]; then
 else
     url=$1
     python -c "from download import *; downloadVideo('$url', path=$path, res=$res, extension=$extension)"
+    deactivate
 fi 
