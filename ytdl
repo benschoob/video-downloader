@@ -31,6 +31,6 @@ if [ $# -lt 1 ]; then
 else
     url=$1
     source ./venv/bin/activate  # Activate the python venv
-    python -c "from download import *; downloadVideo('$url', path=$path, res=$res, extension=$extension)"
+    python -c "from src import download; download.downloadVideo('$url', path=$path, res=$res, extension=$extension)"
     deactivate
 fi 
