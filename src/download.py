@@ -3,10 +3,31 @@ download.py
 Provides functions for downloading videos
 """
 
-from pytubefix import YouTube
+from pytubefix import YouTube, Stream # type: ignore
 
-def printProgressBar(bytes_left: int, bytes_total: int):
-    percent_complete = (bytes_left/bytes_total) * 100
+def bytesToBestSize(bytes: int) -> str:
+    if bytes < 2**10:
+        return "{} bytes".format(bytes)
+    elif bytes < 2**20:
+        return "{}kb".format(bytes/2**10)
+    elif bytes < 2**30:
+        return "{}mb".format(bytes/2**20)
+    else:
+        return "{}gb".format(bytes/2**30)
+
+def progressBar(len: int, percent_complete) -> str:
+    full_bars = round(len * percent_complete)
+    empty_bars = len - full_bars
+    
+    bar = "\u2588" * full_bars + " " * empty_bars
+    return bar
+
+def printProgressMessage(stream, chunk, bytes_remaining):
+    percent_complete = ((stream.filesize - bytes_remaining)/stream.filesize)
+    print("Dowmloading '{}' |{}| ({:.2f}%)".format(stream.default_filename, progressBar(20, percent_complete), percent_complete * 100), end='\r')
+
+def printCompleteMessage(stream, file_path):
+    print("\nDownload Complete.")
 
 """
 Downloads a video from a URL
@@ -18,11 +39,11 @@ Params:
     onCompleteCallback: Function to call when the download is complete
     onProgressCallback: Function to call when download progress is recieved
 """
-def downloadVideo(url: str, path: str = None, res: str = None, extension: str = 'mp4', on_complete_callback = None, on_progress_callback = printProgressBar):
+def downloadVideo(url: str, path: str = None, res: str = None, extension: str = 'mp4', on_complete_callback = printCompleteMessage, on_progress_callback = printProgressMessage):
     yt = YouTube(
         url,
         on_complete_callback=on_complete_callback,
         on_progress_callback=on_progress_callback
     )
-    stream = yt.streams.filter(file_extension=extension, adaptive=True, res=None).order_by('resolution').desc.first()
+    stream = yt.streams.filter(file_extension=extension, adaptive=True, res=None).order_by('resolution').desc().first()
     stream.download(output_path = path)
