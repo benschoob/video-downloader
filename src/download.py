@@ -5,16 +5,22 @@ Provides functions for downloading videos
 
 from pytubefix import YouTube, Stream # type: ignore
 
+"""
+Converts a number of bytes to the appropriate units (KB, MB or GB)
+"""
 def bytesToBestSize(bytes: int) -> str:
     if bytes < 2**10:
         return "{} bytes".format(bytes)
     elif bytes < 2**20:
-        return "{:.1f}kb".format(bytes/2**10)
+        return "{:.1f}KB".format(bytes/2**10)
     elif bytes < 2**30:
-        return "{:.1f}mb".format(bytes/2**20)
+        return "{:.1f}MB".format(bytes/2**20)
     else:
-        return "{:.1f}gb".format(bytes/2**30)
+        return "{:.1f}GB".format(bytes/2**30)
 
+"""
+Returns a progress bar composed of unicode characters.
+"""
 def progressBar(len: int, percent_complete) -> str:
     full_bars = round(len * percent_complete)
     empty_bars = len - full_bars
@@ -22,6 +28,10 @@ def progressBar(len: int, percent_complete) -> str:
     bar = "\u2588" * full_bars + " " * empty_bars
     return bar
 
+"""
+Prints a message reporting the progress of a pytube stream download to the console
+Used as the default on_progress_callback for downloadVideo()
+"""
 def printProgressMessage(stream, chunk, bytes_remaining):
     percent_complete = ((stream.filesize - bytes_remaining)/stream.filesize)
     print(
@@ -35,6 +45,10 @@ def printProgressMessage(stream, chunk, bytes_remaining):
         end='\r'
     )
 
+"""
+Prints a message reporting that a pytube stream has finished downloading
+Used as the default on_complete_callback for downloadVideo()
+"""
 def printCompleteMessage(stream, file_path):
     print("\nDownload Complete.")
 
