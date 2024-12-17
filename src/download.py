@@ -9,11 +9,11 @@ def bytesToBestSize(bytes: int) -> str:
     if bytes < 2**10:
         return "{} bytes".format(bytes)
     elif bytes < 2**20:
-        return "{}kb".format(bytes/2**10)
+        return "{:.1f}kb".format(bytes/2**10)
     elif bytes < 2**30:
-        return "{}mb".format(bytes/2**20)
+        return "{:.1f}mb".format(bytes/2**20)
     else:
-        return "{}gb".format(bytes/2**30)
+        return "{:.1f}gb".format(bytes/2**30)
 
 def progressBar(len: int, percent_complete) -> str:
     full_bars = round(len * percent_complete)
@@ -24,7 +24,16 @@ def progressBar(len: int, percent_complete) -> str:
 
 def printProgressMessage(stream, chunk, bytes_remaining):
     percent_complete = ((stream.filesize - bytes_remaining)/stream.filesize)
-    print("Dowmloading '{}' |{}| ({:.2f}%)".format(stream.default_filename, progressBar(20, percent_complete), percent_complete * 100), end='\r')
+    print(
+        "Downloading '{}' |{}| {}/{} ({:.1f}%)".format(
+            stream.default_filename, 
+            progressBar(20, percent_complete), 
+            bytesToBestSize(stream.filesize - bytes_remaining), 
+            bytesToBestSize(stream.filesize), 
+            percent_complete * 100
+            ),
+        end='\r'
+    )
 
 def printCompleteMessage(stream, file_path):
     print("\nDownload Complete.")
