@@ -22,7 +22,7 @@ Next, you'll need to run the venv setup script. This creates a virtual python en
 #### Windows:
 
 ```powershell
-./venv_setup.ps1
+.\venv_setup.ps1
 ```
 
 ## Using the CLI
