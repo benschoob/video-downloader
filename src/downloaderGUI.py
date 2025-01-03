@@ -27,21 +27,28 @@ def downloadButtonCallback():
 root = Tk()
 root.title("ytdl")
 
-mainframe = ttk.Frame(root, padding=10)
-mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
+# Tab notebook object
+tabCtrl = ttk.Notebook(root)
+
+# Initialize notebook pages
+download_frame = ttk.Frame(tabCtrl, padding=10)
+download_frame.grid(column=0, row=0, sticky=(N, W, E, S))
 root.columnconfigure(0, weight=1)
 root.rowconfigure(0, weight=1)
 root.rowconfigure(1, weight=1)
 root.rowconfigure(2, weight=1)
 
+tabCtrl.add(download_frame, text="Download")
+
+# download frame
 url = StringVar()
-url_entry = ttk.Entry(mainframe, textvariable=url, width=50)
+url_entry = ttk.Entry(download_frame, textvariable=url, width=50)
 url_entry.grid(column=0, row=0, sticky=(W, E))
 
-download_button = ttk.Button(mainframe, text="Download", command=downloadButtonCallback)
+download_button = ttk.Button(download_frame, text="Download", command=downloadButtonCallback)
 download_button.grid(column=0, row=1, sticky=S)
 
-progress_frame = ttk.Frame(mainframe, padding=5)
+progress_frame = ttk.Frame(download_frame, padding=5)
 progress_frame.grid(column=0, row=2, sticky=(W, E))
 
 filename = StringVar()
@@ -53,5 +60,7 @@ prog_bar.grid(column=0, row=1, sticky=W)
 
 progress_text = StringVar()
 ttk.Label(progress_frame, textvariable=progress_text).grid(column=1, row=1, sticky=E)
+
+tabCtrl.pack()
 
 root.mainloop()
