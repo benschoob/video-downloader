@@ -31,6 +31,8 @@ root.title("ytdl")
 tabCtrl = ttk.Notebook(root)
 
 # Initialize notebook pages
+
+# Downloads
 download_frame = ttk.Frame(tabCtrl, padding=10)
 download_frame.grid(column=0, row=0, sticky=(N, W, E, S))
 root.columnconfigure(0, weight=1)
@@ -38,7 +40,15 @@ root.rowconfigure(0, weight=1)
 root.rowconfigure(1, weight=1)
 root.rowconfigure(2, weight=1)
 
+# Files
+files_frame = ttk.Frame(tabCtrl)
+
+# Search
+search_frame = ttk.Frame(tabCtrl)
+
 tabCtrl.add(download_frame, text="Download")
+tabCtrl.add(files_frame, text="Files")
+tabCtrl.add(search_frame, text="search")
 
 # download frame
 url = StringVar()
