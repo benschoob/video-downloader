@@ -41,16 +41,18 @@ root.rowconfigure(1, weight=1)
 root.rowconfigure(2, weight=1)
 
 # Files
-files_frame = ttk.Frame(tabCtrl)
+files_frame = ttk.Frame(tabCtrl, padding=10)
+files_frame.grid(column=0, row=0, sticky=(N, W, E, S))
 
 # Search
-search_frame = ttk.Frame(tabCtrl)
+search_frame = ttk.Frame(tabCtrl, padding=10)
+download_frame.grid(column=0, row=0, sticky=(N, W, E, S))
 
 tabCtrl.add(download_frame, text="Download")
 tabCtrl.add(files_frame, text="Files")
 tabCtrl.add(search_frame, text="search")
 
-# download frame
+# download widget
 url = StringVar()
 url_entry = ttk.Entry(download_frame, textvariable=url, width=50)
 url_entry.grid(column=0, row=0, sticky=(W, E))
@@ -71,6 +73,10 @@ prog_bar.grid(column=0, row=1, sticky=W)
 progress_text = StringVar()
 ttk.Label(progress_frame, textvariable=progress_text).grid(column=1, row=1, sticky=E)
 
-tabCtrl.pack()
+#files widget
 
+# search widget
+
+# pack the bookmarks widget and start the main loop
+tabCtrl.pack()
 root.mainloop()
